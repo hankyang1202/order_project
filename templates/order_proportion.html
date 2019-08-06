@@ -5,6 +5,12 @@
         <title>訂單免運比例圓餅圖</title>
     </head>
     <body>
-        <img src="data:image/png;base64,{{ graphic|safe }}">
+        {% if graphic %}
+            <img src="data:image/png;base64,{{ graphic|safe }}">
+        {% endif %}
+
+        {% if error_message %}
+            <h3>{{ error_message }}</h3>
+        {% endif %}
     </body>
 </html>

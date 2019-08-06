@@ -23,6 +23,15 @@ class Order(models.Model):
         blank=True
     )
 
+    @classmethod
+    def create(cls, order_id, customer_id, shipping):
+        order = cls(
+            order_id=order_id,
+            customer_id=customer_id,
+            shipping=shipping
+        )
+        return order
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(
@@ -36,3 +45,12 @@ class OrderItem(models.Model):
     qty = models.IntegerField(
         default=0
     )
+
+    @classmethod
+    def create(cls, order, product, qty):
+        order_item = cls(
+            order=order,
+            product=product,
+            qty=qty
+        )
+        return order_item

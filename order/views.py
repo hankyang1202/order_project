@@ -20,31 +20,35 @@ class OrderShippingProportionView(BaseTemplateView):
             orders = Order.objects.all().filter(
                 customer_id=request.user.id
             )
-            shipping_fee_orders = orders.filter(shipping__gte=0)
-            none_shipping_fee_orders = orders.filter(shipping=0)
-            plt.figure(figsize=(6, 3))
-            labels = ["shipping fee", "free shipping"]
-            size = [
-                shipping_fee_orders.count(),
-                none_shipping_fee_orders.count()
-                ]
-            plt.pie(size,                         # 數值
-                    labels=labels,                # 標籤
-                    autopct="%1.1f%%",            # 將數值百分比並留到小數點一位
-                    pctdistance=0.6,              # 數字距圓心的距離
-                    textprops={"fontsize": 12}
-                    )
-            plt.axis('equal')
-            plt.title("Shipping Proportion Plot")
-            plt.legend(loc="best")
-            buffer = BytesIO()
-            plt.savefig(buffer, format='png')
-            buffer.seek(0)
-            image_png = buffer.getvalue()
-            buffer.close()
-            graphic = base64.b64encode(image_png)
-            graphic = graphic.decode('utf-8')
-            context = {'orders': orders, 'graphic': graphic}
+
+            if orders.count() > 0:
+                shipping_fee_orders = orders.filter(shipping__gte=0)
+                none_shipping_fee_orders = orders.filter(shipping=0)
+                plt.figure(figsize=(6, 3))
+                labels = ["shipping fee", "free shipping"]
+                size = [
+                    shipping_fee_orders.count(),
+                    none_shipping_fee_orders.count()
+                    ]
+                plt.pie(size,                         # 數值
+                        labels=labels,                # 標籤
+                        autopct="%1.1f%%",            # 將數值百分比並留到小數點一位
+                        pctdistance=0.6,              # 數字距圓心的距離
+                        textprops={"fontsize": 12}
+                        )
+                plt.axis('equal')
+                plt.title("Shipping Proportion Plot")
+                plt.legend(loc="best")
+                buffer = BytesIO()
+                plt.savefig(buffer, format='png')
+                buffer.seek(0)
+                image_png = buffer.getvalue()
+                buffer.close()
+                graphic = base64.b64encode(image_png)
+                graphic = graphic.decode('utf-8')
+                context = {'orders': orders, 'graphic': graphic}
+            else:
+                context = {"error_message": "系統目前無訂單"}
         except Exception as e:
             raise e
         else:
