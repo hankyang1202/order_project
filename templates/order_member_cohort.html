@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>訂單用戶同類群組分析表</title>
+    </head>
+    <body>
+        <form action="{% url 'order_member_cohort' %}" method="post">
+            {% csrf_token %}
+            <select name="member_id" class="form-control">
+                {% for use in users %}
+                    <option value="{{user.id}}">{{ user }}</option>
+                {% endfor %}
+            </select>
+            <button type=submit name="button">確認</button>
+        </form>
+        {% if graphic %}
+            <img src="data:image/png;base64,{{ graphic|safe }}">
+        {% endif %}
+        {% if error_message %}
+        <h3>{{ error_message }}</h3>
+        {% endif %}
+    </body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>最受歡迎商品</title>
+    </head>
+    <body>
+        <h3>最受歡迎商品前三名</h3>
+        <table>
+            <tr>
+                <th>名次</th>
+                <th>商品名稱</th>
+                <th>銷售量</th>
+            </tr>
+            {% for od in order_sll_data %}
+                {% if forloop.counter <= 3 %}
+                <tr>
+                    <td>{{ forloop.counter}}</td>
+                    <td>{{ od.product__product_name }}</td>
+                    <td>{{ od.qty__sum }}</td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
+
+    </body>
+</html>
