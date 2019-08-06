@@ -8,6 +8,6 @@
 
 <ol>
 <li>安裝Docekr </li>
-<li>docker-compose build （Build Project）<li>
-<li>docker-compose up （執行專案）<li>
+<li>docker-compose build （Build Project）</li>
+<li>docker-compose up （執行專案）</li>
 </ol>
